@@ -1,0 +1,63 @@
+[
+  {
+    "name": "PARV",
+    "email": "wsbqwatari@gmail.com",
+    "country": "INDIA",
+    "occupation": "Student",
+    "reason": "",
+    "expectation": "",
+    "id": "wd2dr9x",
+    "status": "approved",
+    "createdAt": "2026-06-28T13:31:24.987Z",
+    "approvedAt": "2026-06-28T13:31:36.082Z"
+  },
+  {
+    "name": "Saumya",
+    "email": "saumyagaur580@gmail.com",
+    "country": "INDIA",
+    "occupation": "Student",
+    "reason": "",
+    "expectation": "",
+    "id": "97wivpq",
+    "status": "approved",
+    "createdAt": "2026-06-28T13:37:39.102Z",
+    "approvedAt": "2026-06-28T13:37:45.803Z"
+  },
+  {
+    "name": "Parvv",
+    "email": "gaursaumya580@gmail.com",
+    "country": "INDIA",
+    "occupation": "Student",
+    "reason": "",
+    "expectation": "",
+    "id": "nnjwg3t",
+    "status": "approved",
+    "createdAt": "2026-06-28T13:38:48.581Z",
+    "approvedAt": "2026-06-28T13:38:52.800Z"
+  },
+  {
+    "name": "Priyanka Gaur",
+    "email": "mamtagaur24103@gmail.com",
+    "country": "INDIA",
+    "occupation": "Student",
+    "reason": "",
+    "expectation": "",
+    "id": "r5de3r9",
+    "status": "approved",
+    "createdAt": "2026-06-28T13:41:22.772Z",
+    "approvedAt": "2026-06-28T13:41:29.835Z"
+  },
+  {
+    "name": "John Doe",
+    "email": "testwaitlist@gmail.com",
+    "phone": "+91-9876543210",
+    "country": "India",
+    "occupation": "Student",
+    "reason": "I want to automate system tasks and manage my calendar.",
+    "expectation": "A smooth, low latency planning application with seamless integration.",
+    "id": "nr6mvc1",
+    "status": "approved",
+    "createdAt": "2026-06-28T13:53:16.176Z",
+    "approvedAt": "2026-06-28T13:54:16.627Z"
+  }
+]
