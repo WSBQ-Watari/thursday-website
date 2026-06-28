@@ -3,7 +3,7 @@ import { addRequest, getRequests } from "@/lib/db";
 
 export async function GET() {
   try {
-    const requests = getRequests();
+    const requests = await getRequests();
     return NextResponse.json(requests);
   } catch (error: any) {
     return NextResponse.json(
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const newRequest = addRequest({
+    const newRequest = await addRequest({
       name,
       email,
       phone,

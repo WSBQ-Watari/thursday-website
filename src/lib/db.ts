@@ -42,19 +42,30 @@ function initDB() {
   }
 }
 
-export function getRequests(): BetaRequest[] {
+export async function getRequests(): Promise<BetaRequest[]> {
+  const SHEET_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  if (SHEET_URL) {
+    try {
+      const res = await fetch(SHEET_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("Failed to read from Google Sheet Webhook");
+      const list = await res.json();
+      return Array.isArray(list) ? list : [];
+    } catch (err) {
+      console.error("Google Sheets read failed, falling back to local file:", err);
+    }
+  }
+
   initDB();
   const data = fs.readFileSync(FILE_PATH, "utf-8");
   return JSON.parse(data);
 }
 
-export function saveRequests(requests: BetaRequest[]) {
+export async function saveRequests(requests: BetaRequest[]) {
   initDB();
   fs.writeFileSync(FILE_PATH, JSON.stringify(requests, null, 2));
 }
 
-export function addRequest(request: Omit<BetaRequest, "id" | "status" | "createdAt" | "approvedAt">): BetaRequest {
-  const requests = getRequests();
+export async function addRequest(request: Omit<BetaRequest, "id" | "status" | "createdAt" | "approvedAt">): Promise<BetaRequest> {
   const newRequest: BetaRequest = {
     ...request,
     id: Math.random().toString(36).substring(2, 9),
@@ -62,13 +73,29 @@ export function addRequest(request: Omit<BetaRequest, "id" | "status" | "created
     createdAt: new Date().toISOString(),
     approvedAt: null,
   };
+
+  const SHEET_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  if (SHEET_URL) {
+    try {
+      await fetch(SHEET_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newRequest),
+      });
+      return newRequest;
+    } catch (err) {
+      console.error("Google Sheets insert failed, writing to local file:", err);
+    }
+  }
+
+  const requests = await getRequests();
   requests.push(newRequest);
-  saveRequests(requests);
+  await saveRequests(requests);
   return newRequest;
 }
 
 export async function approveRequest(id: string): Promise<{ success: boolean; emailSent: boolean; error?: string }> {
-  const requests = getRequests();
+  const requests = await getRequests();
   const index = requests.findIndex((r) => r.id === id);
   if (index === -1) return { success: false, emailSent: false, error: "Request not found" };
   
@@ -76,9 +103,28 @@ export async function approveRequest(id: string): Promise<{ success: boolean; em
     return { success: true, emailSent: false, error: "Already approved" };
   }
 
+  const approvedAt = new Date().toISOString();
   requests[index].status = "approved";
-  requests[index].approvedAt = new Date().toISOString();
-  saveRequests(requests);
+  requests[index].approvedAt = approvedAt;
+
+  const SHEET_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  if (SHEET_URL) {
+    try {
+      await fetch(SHEET_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,
+          action: "approve",
+          approvedAt
+        }),
+      });
+    } catch (err) {
+      console.error("Google Sheets update failed:", err);
+    }
+  }
+
+  await saveRequests(requests);
 
   // Simulate sending email: write to sent_emails.json
   const emailsData = fs.readFileSync(EMAILS_PATH, "utf-8");
