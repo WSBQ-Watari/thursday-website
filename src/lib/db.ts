@@ -61,8 +61,15 @@ export async function getRequests(): Promise<BetaRequest[]> {
 }
 
 export async function saveRequests(requests: BetaRequest[]) {
-  initDB();
-  fs.writeFileSync(FILE_PATH, JSON.stringify(requests, null, 2));
+  if (process.env.VERCEL === "1") {
+    return;
+  }
+  try {
+    initDB();
+    fs.writeFileSync(FILE_PATH, JSON.stringify(requests, null, 2));
+  } catch (err) {
+    console.error("Local requests write failed:", err);
+  }
 }
 
 export async function addRequest(request: Omit<BetaRequest, "id" | "status" | "createdAt" | "approvedAt">): Promise<BetaRequest> {
@@ -303,17 +310,27 @@ export async function approveRequest(id: string): Promise<{ success: boolean; em
     </html>
   `;
 
-  const emailPayload: SentEmail = {
-    id: Math.random().toString(36).substring(2, 9),
-    recipientName: requests[index].name,
-    recipientEmail: requests[index].email,
-    sentAt: new Date().toISOString(),
-    subject,
-    body
-  };
-  
-  emails.push(emailPayload);
-  fs.writeFileSync(EMAILS_PATH, JSON.stringify(emails, null, 2));
+  // Simulate sending email: write to sent_emails.json if not on Vercel
+  if (process.env.VERCEL !== "1") {
+    try {
+      const emailsData = fs.readFileSync(EMAILS_PATH, "utf-8");
+      const emails: SentEmail[] = JSON.parse(emailsData);
+      
+      const emailPayload: SentEmail = {
+        id: Math.random().toString(36).substring(2, 9),
+        recipientName: requests[index].name,
+        recipientEmail: requests[index].email,
+        sentAt: new Date().toISOString(),
+        subject,
+        body
+      };
+      
+      emails.push(emailPayload);
+      fs.writeFileSync(EMAILS_PATH, JSON.stringify(emails, null, 2));
+    } catch (err) {
+      console.error("Local email log write failed:", err);
+    }
+  }
 
   // Check if Resend API Key exists
   const resendApiKey = process.env.RESEND_API_KEY;
