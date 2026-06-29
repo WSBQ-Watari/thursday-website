@@ -117,7 +117,7 @@ export async function approveRequest(id: string): Promise<{ success: boolean; em
   const SHEET_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL;
   if (SHEET_URL) {
     try {
-      await fetch(SHEET_URL, {
+      const res = await fetch(SHEET_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -126,6 +126,10 @@ export async function approveRequest(id: string): Promise<{ success: boolean; em
           approvedAt
         }),
       });
+      if (res.ok) {
+        const resultData = await res.json();
+        return { success: true, emailSent: !!resultData.emailSent };
+      }
     } catch (err) {
       console.error("Google Sheets update failed:", err);
     }
