@@ -19,6 +19,7 @@ import Footer from "@/components/Footer";
 import { DownloadProvider, useDownload } from "@/context/DownloadContext";
 import { OrbProvider } from "@/context/OrbContext";
 import DownloadModal from "@/components/DownloadModal";
+import CareersModal from "@/components/CareersModal";
 import IntelligenceOrb from "@/components/IntelligenceOrb";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -280,6 +281,7 @@ function HomeContent() {
 
           {/* Download Portal Dialog */}
           <DownloadModal />
+          <CareersModal />
         </motion.div>
       )}
     </AnimatePresence>

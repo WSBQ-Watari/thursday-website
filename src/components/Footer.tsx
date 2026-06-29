@@ -6,7 +6,7 @@ import { useDownload } from "@/context/DownloadContext";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const { openDownloadModal } = useDownload();
+  const { openDownloadModal, openCareersModal } = useDownload();
 
   return (
     <footer className="relative border-t border-white/[0.1] bg-white/[0.02] backdrop-blur-2xl px-4 sm:px-8 py-16 md:py-20 overflow-hidden text-left">
@@ -59,6 +59,12 @@ export default function Footer() {
                 className="text-[#5B8CFF] hover:text-[#9CC6FF] font-bold transition-colors duration-300 cursor-pointer text-left bg-transparent border-none p-0 uppercase tracking-[0.15em] text-[10px]"
               >
                 Join Beta
+              </button>
+              <button 
+                onClick={openCareersModal} 
+                className="text-[#5B8CFF] hover:text-[#9CC6FF] font-bold transition-colors duration-300 cursor-pointer text-left bg-transparent border-none p-0 uppercase tracking-[0.15em] text-[10px]"
+              >
+                Work with Us
               </button>
             </div>
 

@@ -356,9 +356,16 @@ export default function DownloadModal() {
               Request Received
             </h2>
             
-            <p className="max-w-sm text-xs sm:text-sm text-[#A1A1AA] leading-relaxed mb-8">
+            <p className="max-w-sm text-xs sm:text-sm text-[#A1A1AA] leading-relaxed mb-5">
               Thank you for requesting access. Your details have been secured in our closed beta registry. Once approved, a secure installation package and invite code will be sent to <strong className="text-white">{formData.email}</strong>.
             </p>
+
+            <div className="max-w-sm border border-[#5B8CFF]/20 bg-[#5B8CFF]/5 px-4 py-3.5 rounded-2xl text-left text-[11px] text-[#A1A1AA] leading-normal mb-8 flex gap-3 items-start font-sans">
+              <span className="text-[#5B8CFF] shrink-0 font-bold font-mono uppercase tracking-wider text-[9px] mt-0.5 border border-[#5B8CFF]/30 px-1.5 py-0.5 rounded bg-[#5B8CFF]/5">Important</span>
+              <span>
+                Once approved, the invitation email with downloading links might land in your <strong>Spam / Junk</strong> folder. Please check all folders if you don't receive it in your Inbox!
+              </span>
+            </div>
 
             <button
               onClick={closeDownloadModal}
