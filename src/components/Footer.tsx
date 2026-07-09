@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MessageSquare, ShieldCheck, Mail, Globe, BookOpen } from "lucide-react";
+import { Instagram, ShieldCheck, Mail, Globe, BookOpen } from "lucide-react";
 import { useDownload } from "@/context/DownloadContext";
 
 export default function Footer() {
@@ -71,9 +71,9 @@ export default function Footer() {
             {/* Column 2 */}
             <div className="flex flex-col gap-4 text-[10px] font-bold uppercase tracking-[0.15em]">
               <span className="text-white/40 border-b border-white/[0.04] pb-2">Community</span>
-              <a href="https://discord.gg/thursday" target="_blank" rel="noopener noreferrer" className="text-[#A1A1AA] hover:text-white transition-colors duration-300 flex items-center gap-1.5">
-                <MessageSquare className="w-3.5 h-3.5" />
-                Discord Server
+              <a href="https://www.instagram.com/thursday.ai/" target="_blank" rel="noopener noreferrer" className="text-[#A1A1AA] hover:text-white transition-colors duration-300 flex items-center gap-1.5">
+                <Instagram className="w-3.5 h-3.5" />
+                Instagram
               </a>
               <a href="https://docs.thursday.ai" target="_blank" rel="noopener noreferrer" className="text-[#A1A1AA] hover:text-white transition-colors duration-300 flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5" />
