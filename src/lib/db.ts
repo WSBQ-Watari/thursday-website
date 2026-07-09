@@ -128,7 +128,10 @@ export async function approveRequest(id: string): Promise<{ success: boolean; em
       });
       if (res.ok) {
         const resultData = await res.json();
-        return { success: true, emailSent: !!resultData.emailSent };
+        if (resultData && resultData.emailSent) {
+          return { success: true, emailSent: true };
+        }
+        console.log("Google Sheets updated. Proceeding to send email locally...");
       }
     } catch (err) {
       console.error("Google Sheets update failed:", err);
