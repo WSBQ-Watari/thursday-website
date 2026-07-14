@@ -15,6 +15,7 @@ import Vision from "@/components/Vision";
 import WhyThursday from "@/components/WhyThursday";
 import Roadmap from "@/components/Roadmap";
 import DownloadSection from "@/components/DownloadSection";
+import JoinUs from "@/components/JoinUs";
 import Footer from "@/components/Footer";
 import { DownloadProvider, useDownload } from "@/context/DownloadContext";
 import { OrbProvider } from "@/context/OrbContext";
@@ -238,6 +239,9 @@ function HomeContent() {
 
           {/* Dedicated Download Card Section */}
           <DownloadSection />
+
+          {/* Join Us Section */}
+          <JoinUs />
 
           {/* Final Call to Action Section */}
           <section id="cta" className="relative py-32 md:py-48 px-4 sm:px-8 border-t border-white/[0.04] bg-[#050505] overflow-hidden text-center">

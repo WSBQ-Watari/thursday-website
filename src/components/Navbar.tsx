@@ -23,6 +23,7 @@ export default function Navbar() {
     { name: "Interface", href: "#interface" },
     { name: "Why Thursday", href: "#why-thursday" },
     { name: "Roadmap", href: "#roadmap" },
+    { name: "Join Us", href: "#join-us" },
   ];
 
   return (
