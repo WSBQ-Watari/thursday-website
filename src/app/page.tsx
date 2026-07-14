@@ -146,57 +146,61 @@ function HomeContent() {
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
-      {loading ? (
-        <motion.main
-          key="loader"
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] p-6 text-center select-none"
-        >
-          <div className="w-full max-w-xs flex flex-col gap-6 relative">
-            {/* Logo element in loader */}
-            <div className="flex flex-col gap-2 items-center justify-center">
-              <span className="text-xl font-bold uppercase tracking-[0.3em] text-white">
-                THURSDAY
-              </span>
-              <span className="text-[9px] font-mono tracking-[0.2em] text-[#9CA3AF]/40 uppercase mt-1">
-                Personal Operating Layer
-              </span>
-            </div>
+    <>
+      {/* Persistent Floating 3D Orb overlay - always mounted so WebGL compiles behind loader */}
+      <div
+        ref={orbContainerRef}
+        className={`fixed pointer-events-none z-[60] transition-opacity duration-500 ${
+          loading ? "opacity-0" : "opacity-100"
+        }`}
+        style={{
+          top: 0,
+          left: 0,
+          width: 0,
+          height: 0,
+        }}
+      >
+        <div className="w-full h-full pointer-events-auto">
+          <IntelligenceOrb />
+        </div>
+      </div>
 
-            {/* Loading bar container */}
-            <div className="w-full h-[1px] bg-white/[0.05] rounded-full overflow-hidden relative">
-              <motion.div
-                className="h-full bg-white transition-all duration-100 ease-out"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-          </div>
-        </motion.main>
-      ) : (
-        <motion.div
-          key="content"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="relative min-h-screen text-white bg-[#050505] select-none"
-        >
-          {/* Persistent Floating 3D Orb overlay */}
-          <div
-            ref={orbContainerRef}
-            className="fixed pointer-events-none z-[60] transition-opacity duration-300"
-            style={{
-              top: 0,
-              left: 0,
-              width: 0,
-              height: 0,
-            }}
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.main
+            key="loader"
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] p-6 text-center select-none"
           >
-            <div className="w-full h-full pointer-events-auto">
-              <IntelligenceOrb />
+            <div className="w-full max-w-xs flex flex-col gap-6 relative">
+              {/* Logo element in loader */}
+              <div className="flex flex-col gap-2 items-center justify-center">
+                <span className="text-xl font-bold uppercase tracking-[0.3em] text-white">
+                  THURSDAY
+                </span>
+                <span className="text-[9px] font-mono tracking-[0.2em] text-[#9CA3AF]/40 uppercase mt-1">
+                  Personal Operating Layer
+                </span>
+              </div>
+
+              {/* Loading bar container */}
+              <div className="w-full h-[1px] bg-white/[0.05] rounded-full overflow-hidden relative">
+                <motion.div
+                  className="h-full bg-white transition-all duration-100 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
             </div>
-          </div>
+          </motion.main>
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative min-h-screen text-white bg-[#050505] select-none"
+          >
 
           {/* Transparent floating navbar */}
           <Navbar />
@@ -289,7 +293,8 @@ function HomeContent() {
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  </>
+);
 }
 
 export default function Home() {
